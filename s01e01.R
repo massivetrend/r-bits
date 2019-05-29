@@ -114,7 +114,6 @@ ggplot(hdata, aes(fecha, homicidios)) +
   ylab("homicidios") +
   bbc_style()
 
-### Datanights S01E02
 
 
 
