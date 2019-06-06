@@ -3,8 +3,7 @@
 # 2. Uso de %in%
 # 3. Cambio de etiquetas en eje X verticalmente
 # 4. Graficación con ggplot2 con etiquetas de eje X verticalmente
-# 
-# 
+
 setwd("/Users/natorro/Desktop/r-bits")
 pacman::p_load(char = c("readxl"))
 my_data <- read.table(pipe("pbpaste"), sep = "\t", header = TRUE)
@@ -52,7 +51,7 @@ library(dplyr)
 dataration <- inner_join(victimas_agregado, population_data)
 dataration
 
-dataration$porcentaje <- (dataration$x / dataration$poblaciontotal ) * 100
+dataration$porcentaje <- (dataration$x / dataration$poblaciontotal ) * 100000
 head(dataration)
 dataration$estados <- as.factor(dataration$estados)
 plot(dataration$estados, dataration$porcentaje)
