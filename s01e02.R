@@ -8,13 +8,15 @@
 #   d) ggplot
 # 4. Faceting
 # 5. Interacción entre ggplot y plotly
+
+
 # Carga de los paquetes a usar en esta sesión
 if(!require(pacman)){
   install.packages(pacman, dependencies = TRUE)
   library(pacman)
 }
 
-paquetes <- c("pacman", "reshape2", "rbokeh", "ggplot2", "plotly", "RColorBrewer")
+#paquetes <- c("pacman", "reshape2", "rbokeh", "ggplot2", "plotly", "RColorBrewer")
 pacman::p_load(char = c("pacman", "reshape2", "rbokeh", 
                         "ggplot2", "plotly", "RColorBrewer", "bbplot")) 
 # Hablemos un poco de RColorBrewer:
@@ -31,7 +33,7 @@ pacman::p_load(char = c("pacman", "reshape2", "rbokeh",
 # display.brewer.pal(n, name)
 # display.brewer.all(n = NULL, type = "all", select = NULL, colorblindFriendly = FALSE)
 display.brewer.all()
-display.brewer.pal(3, "Spectral")
+display.brewer.pal(32, "PRGn")
 colors <- brewer.pal(3, "Spectral")
 
 # Let's start!
