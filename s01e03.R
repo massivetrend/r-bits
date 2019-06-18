@@ -4,10 +4,10 @@
 # 3. Cambio de etiquetas en eje X verticalmente
 # 4. Graficación con ggplot2 con etiquetas de eje X verticalmente
 
-setwd("/Users/natorro/Desktop/r-bits")
-pacman::p_load(char = c("readxl"))
+setwd("/Users/natorro/Desktop/r-bits/data")
+pacman::p_load(char = c("readxl", "dplyr", "ggplot2"))
 my_data <- read.table(pipe("pbpaste"), sep = "\t", header = TRUE)
-
+head(my_data)
 # En Windows:
 #my_data <- read.table(file = "clipboard", 
 #                      sep = "\t", header=TRUE)
@@ -19,14 +19,17 @@ my_data2 <- read_excel("composicion_y_estructura_de_la_poblacion.xlsx",
                                      "v5", "pobhombres", "pobmujeres"), 
                        range = paste(filesheets[3],"!", "A16:G47", sep = ""))
 population_data <- select(my_data2, estados, poblaciontotal, pobhombres, pobmujeres)
-
+head(population_data)
+head(my_data)
 # Let's read the data:
 victimas <- read.csv("victimas.csv")
-
+head(victimas)
 victimas_filtrado <- subset(victimas, 
                             Subtipo.de.delito == "Homicidio doloso" | 
                               Subtipo.de.delito == "Feminicidio")
 
+head(victimas_filtrado)
+tail(victimas_filtrado)
 victimas_melt <- melt(victimas_filtrado, 
                       c("Año", "Entidad"), 
                       c("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
@@ -34,30 +37,37 @@ victimas_melt <- melt(victimas_filtrado,
                         "Diciembre"))
 
 head(victimas_melt)
-
-na_index <- is.na(victimas_melt$Valor)
+tail(victimas_melt)
+na_index <- is.na(victimas_melt$value)
 victimas_melt <- victimas_melt[!na_index,]
-
-victimas_agregado <- aggregate(victimas_melt$Valor, 
+head(victimas_melt)
+tail(victimas_melt)
+victimas_agregado <- aggregate(victimas_melt$value, 
                                by = list(entidad = victimas_melt$Entidad), 
                                sum)
 
 estados <- population_data$estados
 delagregado <- victimas_agregado$entidad
+estados
+delagregado
 estados %in% delagregado
 estados == delagregado
 
-library(dplyr)
+names(victimas_agregado)[1] <- "estados"
+names(victimas_agregado)
+names(population_data)
 dataration <- inner_join(victimas_agregado, population_data)
-dataration
+head(dataration)
 
 dataration$porcentaje <- (dataration$x / dataration$poblaciontotal ) * 100000
 head(dataration)
+class(dataration$estados)
 dataration$estados <- as.factor(dataration$estados)
 plot(dataration$estados, dataration$porcentaje)
 plot(dataration$estados, dataration$porcentaje, mar=c(5, 4, 0, 2) + 0.1, xaxt="n")
-axis(1, at=1:32, labels=categories, las = 2, cex.axis = 0.8, main = "", xlab ="")
-library(ggplot2)
+axis(1, at=1:32, labels=dataration$estados, las = 2, cex.axis = 0.8, main = "", xlab ="")
+
+# ggplot
 ggplot(dataration, aes(x = estados, y = porcentaje)) +
   theme_bw() + 
   geom_bar(stat = "identity") + 

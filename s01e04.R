@@ -11,7 +11,9 @@ population_data <- read_excel("composicion_y_estructura_de_la_poblacion.xlsx",
                        col_names = c("estados", "v2", "v3", "poblaciontotal", 
                                      "v5", "pobhombres", "pobmujeres"), 
                        range = paste(filesheets[3],"!", "A16:G47", sep = ""))
-population_data <- select(population_data, estados, poblaciontotal, pobhombres, pobmujeres)
+
+population_data <- select(population_data, estados, 
+                          poblaciontotal, pobhombres, pobmujeres)
 
 # Let's read the data:
 victimas <- read.csv("victimas.csv")
@@ -61,6 +63,25 @@ dataration$yearmon <- zoo::as.yearmon(paste(dataration$mes,
                                           dataration$año))
 
 head(dataration)
+#heatmap
 ggplot(dataration, aes(x = yearmon, y = estados)) + geom_tile(aes(fill = porcentajes), 
-                                                          colour = "gray") +
-  scale_fill_gradient(low = "white", high = "steelblue")
+                                                          colour = "white") +
+  scale_fill_gradient(low = "gray", high = "steelblue")
+
+# boxplot
+ggplot(dataration, aes(x = estados, y = porcentajes)) + geom_boxplot() + 
+  theme(axis.text.x = element_text(angle = 90))
+
+library(forcats)
+p <- ggplot(dataration, aes(x = fct_reorder(estados, porcentajes, fun = median, .desc =TRUE), y = porcentajes)) + 
+  geom_boxplot(aes(fill = fct_reorder(estados, porcentajes, fun = median, .desc =TRUE))) + 
+  geom_jitter(position=position_jitter(0.2), alpha = 0.1) +
+  theme_bw(base_size = 14) +
+  xlab("Estados") +
+  ylab("Homicidios por cada cien mil") +
+  scale_fill_discrete(guide = guide_legend(title = "Boxplots")) + 
+  theme(axis.text.x = element_text(angle = 90)) + 
+  theme(legend.position = "none")
+
+
+plotly::ggplotly(p)
