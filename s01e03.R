@@ -71,5 +71,21 @@ axis(1, at=1:32, labels=dataration$estados, las = 2, cex.axis = 0.8, main = "", 
 ggplot(dataration, aes(x = estados, y = porcentaje)) +
   theme_bw() + 
   geom_bar(stat = "identity") + 
-  theme(axis.text.x=element_text(angle=90,hjust=1,vjust=0.5))
+  theme(axis.text.x=element_text(angle=45, hjust=1, vjust=1)) 
+  
+ggplot(dataration, aes(x = estados, y = porcentaje)) +
+  theme_bw() + 
+  geom_bar(stat = "identity") + 
+  theme(axis.text.x=element_text(angle=90, hjust=1, vjust=0.5)) 
 
+ggplot(dataration, aes(x = estados, y = porcentaje)) +
+  theme_bw() + 
+  geom_bar(stat = "identity") + 
+  theme(axis.text.x=element_text(angle=45, hjust=1, vjust=1)) +
+  bbc_style()
+
+ggplot(dataration, aes(x = estados, y = porcentaje)) +
+  theme_bw() + 
+  geom_bar(stat = "identity") + 
+  theme(axis.text.x=element_text(angle=90, hjust=1, vjust=0.5)) +
+  bbc_style()

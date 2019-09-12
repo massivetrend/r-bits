@@ -33,12 +33,12 @@ pacman::p_load(char = c("pacman", "reshape2", "rbokeh",
 # display.brewer.pal(n, name)
 # display.brewer.all(n = NULL, type = "all", select = NULL, colorblindFriendly = FALSE)
 display.brewer.all()
-display.brewer.pal(32, "PRGn")
+display.brewer.pal(3, "PRGn")
 colors <- brewer.pal(3, "Spectral")
 
 # Let's start!
 getwd()
-setwd("/Users/natorro/Dropbox/R-Bits/visceral-datanights/S01E01/data/")
+setwd("/Users/natorro/Desktop/r-bits/data")
 
 
 # Filtramos de esta manera, pero hay muchas más:

@@ -1,3 +1,10 @@
+# Temas a tratar
+# 
+#
+#
+#
+#
+# 
 setwd("/Users/natorro/Desktop/r-bits")
 pacman::p_load(char = c("readxl"))
 
